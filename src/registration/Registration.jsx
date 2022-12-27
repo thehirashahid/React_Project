@@ -16,7 +16,23 @@ const Registration = () => {
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
-      onSubmit: (values, action) => {
+      onSubmit: async (values, action) => {
+        const { name, email, password } = values;
+        const res = await fetch('https://postapp-5f0f8-default-rtdb.firebaseio.com/.json',
+          {
+            method: "POST",
+            Headers: {
+              'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              password
+            })
+          });
+        if (res) alert("Data has been stored");
+        else alert("Data has not been stored");
+
         console.log(
           "🚀 ~ file: Registration.jsx ~ line 11 ~ Registration ~ values",
           values

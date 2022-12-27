@@ -6,7 +6,7 @@ import Posts from './posts/posts'
 const App = () => {
   return (
     <>
-      <Posts />
+      <Registration />
     </>
   );
 };
