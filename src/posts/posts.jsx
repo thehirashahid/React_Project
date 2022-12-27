@@ -1,5 +1,6 @@
 import React from "react";
 import { useGlobalContext } from "./context";
+import Search from "./search";
 import "./post.css";
 
 const Posts = () => {
@@ -12,6 +13,7 @@ const Posts = () => {
         );
     }
     return (<>
+        <Search />
         <div className="posts-div">
             {data.map((post) => {
                 const { title, body, userId, id } = post;
@@ -20,10 +22,10 @@ const Posts = () => {
                         <div className="card" key={id}>
                             <h2>{title}</h2>
                             <p>{body}</p>
-                            <p>
-                                By <span> {userId} </span> | <span>{id}</span> comments
-                            </p>
                             <div className="card-button" >
+                                <p>
+                                    By <span> {userId} </span> | <span>{id}</span> comments
+                                </p>
                                 <a href="#" onClick={() => removePost(id)}>Remove</a>
                             </div>
                         </div>

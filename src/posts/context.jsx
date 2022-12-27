@@ -37,6 +37,13 @@ const AppProvider = ({ children }) => {
         dispatch({ type: "REMOVE_POST", payload: post_id });
     }
 
+    // const searchPost = (searchTitle) => {
+    //     dispatch({
+    //         type: "SEARCH_POST",
+    //         payload: searchTitle
+    //     });
+    // }
+
     useEffect(() => {
         fetchApiData(API);
     }, []);

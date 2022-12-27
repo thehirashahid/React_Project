@@ -16,6 +16,11 @@ const reducer = (state, action) => {
                 ...state,
                 data: state.data.filter((curElement) => curElement.id != action.payload),
             }
+        // case "SEARCH_POST":
+        //     return {
+        //         ...state,
+        //         title: action.payload,
+        //     }
     }
     return state;
 };
