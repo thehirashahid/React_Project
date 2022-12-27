@@ -9,10 +9,15 @@ const initialState = {
 }
 
 const AppContext = React.createContext();
+
+// provider function
 const AppProvider = ({ children }) => {
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const fetchApiData = async (url) => {
+        dispatch({ type: "SET_LOADING" });
+
         try {
             const res = await fetch(url);
             const data = await res.json();
@@ -23,11 +28,14 @@ const AppProvider = ({ children }) => {
                     data: data,
                 }
             })
-            isLoading = false;
         } catch (error) {
             console.log(error);
         }
     }
+
+    // const removePost = () => {
+    //     dispatch;
+    // }
 
     useEffect(() => {
         fetchApiData(API);

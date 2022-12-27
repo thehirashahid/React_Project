@@ -1,20 +1,36 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useGlobalContext } from "./context";
+import "./post.css";
 
 const Posts = () => {
-    const { data } = useGlobalContext();
-    // console.log('there: ' + data[0].title);
+    const { data, isLoading } = useGlobalContext();
+    if (isLoading) {
+        return (
+            <>
+                <h1>Loading......</h1>
+            </>
+        );
+    }
     return (<>
-        {data.map((post) => {
-            const { title, body } = post;
-            return (
-                <>
-                    <div className="card">
-                        <h2></h2>
-                    </div>
-                </>
-            );
-        })}
+        <div className="posts-div">
+            {data.map((post) => {
+                const { title, body, userId, id } = post;
+                return (
+                    <>
+                        <div className="card" key={id}>
+                            <h2>{title}</h2>
+                            <p>{body}</p>
+                            <p>
+                                By <span> {userId} </span> | <span>{id}</span> comments
+                            </p>
+                            <div className="card-button" >
+                                {/* <a href="#" onClick={removePost}>Remove</a> */}
+                            </div>
+                        </div>
+                    </>
+                );
+            })}
+        </div>
     </>
     );
 };

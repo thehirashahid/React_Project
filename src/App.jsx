@@ -6,7 +6,6 @@ import Posts from './posts/posts'
 const App = () => {
   return (
     <>
-      <div>Hi</div>
       <Posts />
     </>
   );
