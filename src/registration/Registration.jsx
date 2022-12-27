@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { auth } from "./firebase.js";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { GlobalStyle } from "./Styles/globalStyles";
 import { useFormik } from "formik";
 import { signUpSchema } from "./schemas";
@@ -12,32 +14,35 @@ const initialValues = {
 };
 
 const Registration = () => {
+
+  function register(values) {
+    const { email, password } = values;
+    auth.createUserWithEmailAndPassword(email, password)
+    action.resetForm();
+  }
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: async (values, action) => {
-        const { name, email, password } = values;
-        const res = await fetch('https://postapp-5f0f8-default-rtdb.firebaseio.com/.json',
-          {
-            method: "POST",
-            Headers: {
-              'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              password
-            })
-          });
-        if (res) alert("Data has been stored");
-        else alert("Data has not been stored");
+        register(values);
+        // const { name, email, password } = values;
+        // const res = await fetch('https://postapp-5f0f8-default-rtdb.firebaseio.com/.json',
+        //   {
+        //     method: "POST",
+        //     Headers: {
+        //       'Content-Type': "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //       name,
+        //       email,
+        //       password
+        //     })
+        //   });
+        // if (res) alert("Data has been stored");
+        // else alert("Data has not been stored");
 
-        console.log(
-          "🚀 ~ file: Registration.jsx ~ line 11 ~ Registration ~ values",
-          values
-        );
-        action.resetForm();
       },
     });
   console.log(
@@ -129,12 +134,12 @@ const Registration = () => {
                   </div>
                   <div className="modal-buttons">
                     <button className="input-button" type="submit">
-                      Registration
+                      Sign Up
                     </button>
                   </div>
                 </form>
                 <p className="sign-up">
-                  Already have an account? <a href="#">Sign In now</a>
+                  Already have an account? <a href="/login">Log in now</a>
                 </p>
               </div>
               <div className="modal-right">
@@ -186,7 +191,7 @@ const Wrapper = styled.section`
     background: #fff;
   }
   .modal-title {
-    margin: 0;
+    margin-bottom: 3%;
     font-weight: 400;
     color: #55311c;
   }
@@ -302,6 +307,9 @@ const Wrapper = styled.section`
   }
   .input-block:focus-within .input-label {
     color: rgba(140, 117, 105, 0.8);
+  }
+  button:disabled{
+    background-color: grey
   }
 
   @media (max-width: 750px) {

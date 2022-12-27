@@ -81,7 +81,7 @@ const Login = () => {
                   </div>
                 </form>
                 <p className="sign-up">
-                  Don't have any account? <a href="#">Sign Up now</a>
+                  Don't have any account? <a href="/registration">Sign Up now</a>
                 </p>
               </div>
               <div className="modal-right">
