@@ -33,16 +33,16 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    // const removePost = () => {
-    //     dispatch;
-    // }
+    const removePost = (post_id) => {
+        dispatch({ type: "REMOVE_POST", payload: post_id });
+    }
 
     useEffect(() => {
         fetchApiData(API);
     }, []);
 
     return (
-        <AppContext.Provider value={{ ...state }}>
+        <AppContext.Provider value={{ ...state, removePost }}>
             {children}
         </AppContext.Provider>
     )

@@ -3,7 +3,7 @@ import { useGlobalContext } from "./context";
 import "./post.css";
 
 const Posts = () => {
-    const { data, isLoading } = useGlobalContext();
+    const { data, isLoading, removePost } = useGlobalContext();
     if (isLoading) {
         return (
             <>
@@ -24,7 +24,7 @@ const Posts = () => {
                                 By <span> {userId} </span> | <span>{id}</span> comments
                             </p>
                             <div className="card-button" >
-                                {/* <a href="#" onClick={removePost}>Remove</a> */}
+                                <a href="#" onClick={() => removePost(id)}>Remove</a>
                             </div>
                         </div>
                     </>

@@ -10,7 +10,11 @@ const reducer = (state, action) => {
                 ...state,
                 data: action.payload.data,
                 isLoading: false
-                // arr: action.payload.arr,
+            }
+        case "REMOVE_POST":
+            return {
+                ...state,
+                data: state.data.filter((curElement) => curElement.id != action.payload),
             }
     }
     return state;
