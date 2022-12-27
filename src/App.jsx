@@ -4,7 +4,11 @@ import Login from "./registration/Login";
 import Posts from './posts/posts'
 
 const App = () => {
-  return <Posts />;
+  return (
+    <>
+      <Posts />
+    </>
+  );
 };
 
 export default App;
