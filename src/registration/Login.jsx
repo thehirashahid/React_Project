@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "./Styles/globalStyles";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import { loginSchema } from "./schemas/loginSchema";
 // import { Registration } from './Registration';
 
@@ -11,15 +12,20 @@ const initialValues = {
 };
 
 const Login = () => {
+  const history = useNavigate();
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values, action) => {
-        console.log(
-          "🚀 ~ file: Login.jsx ~ line 11 ~ Login ~ values",
-          values
-        );
+        const getUserArr = localStorage.getItem("user");
+        const userData = JSON.parse(getUserArr)
+        const userLogin = userData.filter((el, k) => {
+          return el.email === values.email && el.password === values.password
+        });
+        if (userLogin.length === 0) alert("Invalid credentials");
+        else history("/posts")
         action.resetForm();
       },
     });
@@ -81,7 +87,7 @@ const Login = () => {
                   </div>
                 </form>
                 <p className="sign-up">
-                  Don't have any account? <a href="#">Sign Up now</a>
+                  Don't have any account? <a href="./">Sign Up now</a>
                 </p>
               </div>
               <div className="modal-right">

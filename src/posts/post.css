@@ -12,9 +12,21 @@ body {
     background-color: rgb(219, 230, 253);
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout {
+    background-color: rgb(219, 230, 253);
+    color: red;
+}
+
 h1 {
     font-size: 3.2rem;
     margin: 2rem 0;
+    align-items: center;
     text-align: center;
 }
 

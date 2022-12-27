@@ -8,8 +8,9 @@ const Search = () => {
     // const { title, searchPost } = useGlobalContext();
 
     return <>
-        <div>
+        <div className="header">
             <h1>All Posts</h1>
+            <button className="logout" >LOGOUT </button>
             {/* <form>
                 <div>
                     <input type="text" placeholder="Search Here"

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "./Styles/globalStyles";
 import { useFormik } from "formik";
@@ -11,12 +11,18 @@ const initialValues = {
   confirm_password: "",
 };
 
+
 const Registration = () => {
+  const [data, setData] = useState([]);
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
+        const { name, email, password } = values;
+        localStorage.setItem("user", JSON.stringify([...data, values]));
+
         console.log(
           "🚀 ~ file: Registration.jsx ~ line 11 ~ Registration ~ values",
           values
@@ -113,12 +119,12 @@ const Registration = () => {
                   </div>
                   <div className="modal-buttons">
                     <button className="input-button" type="submit">
-                      Registration
+                      Sign Up
                     </button>
                   </div>
                 </form>
                 <p className="sign-up">
-                  Already have an account? <a href="#">Sign In now</a>
+                  Already have an account? <a href="./login">Sign In now</a>
                 </p>
               </div>
               <div className="modal-right">
@@ -170,7 +176,7 @@ const Wrapper = styled.section`
     background: #fff;
   }
   .modal-title {
-    margin: 0;
+    margin-bottom: 3%;
     font-weight: 400;
     color: #55311c;
   }
