@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useGlobalContext } from "./context";
 
 const Posts = () => {
-    return <>
-        <h2>Hello</h2>
+    const { data } = useGlobalContext();
+    // console.log('there: ' + data[0].title);
+    return (<>
+        {data.map((post) => {
+            const { title, body } = post;
+            return (
+                <>
+                    <div className="card">
+                        <h2></h2>
+                    </div>
+                </>
+            );
+        })}
     </>
+    );
 };
 
 export default Posts;
