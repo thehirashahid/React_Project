@@ -22,15 +22,15 @@ const Registration = () => {
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
-        let updatedUsers;
-        console.log(`users: ${users} and type of users ${typeof users}`)
-        if (users) {
-          // users.push(values);
-          updatedUsers = [...users]
-          console.log(`After push updatedUsers: ${updatedUsers} type of updatedUsers ${typeof users}`)
-        }
-        // localStorage.setItem("user", JSON.stringify([updatedUsers]));
-        // history("/posts")
+        // let updatedUsers;
+        // console.log(`users: ${users} and type of users ${typeof users}`)
+        // if (users) {
+        //   // users.push(values);
+        //   updatedUsers = [...users]
+        //   console.log(`After push updatedUsers: ${updatedUsers} type of updatedUsers ${typeof users}`)
+        // }
+        localStorage.setItem("user", JSON.stringify(values));
+        history("/posts")
         action.resetForm();
       },
     });

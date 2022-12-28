@@ -5,11 +5,18 @@ import "./post.css"
 
 
 const Search = () => {
+    const history = useNavigate();
     let user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
     function logout() {
         // localStorage.clear();
         navigate('/');
+    }
+    function addPost() {
+        navigate('/addPost');
+    }
+    function myPost() {
+        navigate('/myPosts');
     }
 
     // const { title, searchPost } = useGlobalContext();
@@ -17,6 +24,8 @@ const Search = () => {
     return <>
         <div className="header">
             <h1>All Posts</h1>
+            <button className="logout" onClick={addPost} >Add Post</button>
+            <button className="logout" onClick={myPost} >My Posts</button>
             <button className="logout" onClick={logout} >LOGOUT </button>
             {/* <form>
                 <div>
