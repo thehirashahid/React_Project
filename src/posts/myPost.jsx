@@ -6,10 +6,16 @@ const MyPosts = () => {
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
     function removePost(id) {
-        myPosts.filter((curElement) => {
-            curElement.id != id
-        })
-        console.log(myPosts)
+        // myPosts.filter((curElement) => {
+        //     console.log(`curElement: ${curElement.id} and id: ${id}`)
+        //     curElement.id != id
+        // })
+        // console.log(myPosts)
+        for (var i = 0; i < myPosts.length; i++) {
+            if (myPosts[i].id === id) {
+                myPosts.splice(i, 1);
+            }
+        }
     }
     useEffect(() => {
         console.log(myPosts)
