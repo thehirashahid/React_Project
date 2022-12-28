@@ -3,7 +3,6 @@ import Search from "./search";
 import "./post.css";
 
 const MyPosts = () => {
-    let arr = [];
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
     function removePost(id) {
@@ -19,7 +18,7 @@ const MyPosts = () => {
     return (<>
         <Search />
         <div className="posts-div">
-            {(myPosts === undefined || myPosts.length == 0)
+            {(myPosts === undefined || myPosts == null)
                 ? <h2>No Post Available</h2>
                 : myPosts.map((post) => {
                     const { title, body, userId, id } = post;

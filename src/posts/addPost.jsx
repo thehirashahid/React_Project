@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { GlobalStyle } from "../registration/Styles/globalStyles";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import Search from "./search";
 
 
 
@@ -14,6 +15,9 @@ const initialValues = {
 };
 
 const AddPost = () => {
+  const getPosts = localStorage.getItem("post");
+  const myPosts = JSON.parse(getPosts)
+  console.log(myPosts)
   const [posts, setPosts] = useState([]);
 
 
@@ -49,6 +53,7 @@ const AddPost = () => {
 
   return (
     <>
+
       <GlobalStyle />
       <Wrapper>
         <div className="container">
