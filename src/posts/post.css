@@ -12,9 +12,25 @@ body {
     background-color: rgb(219, 230, 253);
 }
 
+/* .navbar_wrapper a {
+    padding-left: 30px;
+} */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout {
+    background-color: rgb(219, 230, 253);
+    color: red;
+}
+
 h1 {
     font-size: 3.2rem;
     margin: 2rem 0;
+    align-items: center;
     text-align: center;
 }
 
@@ -81,7 +97,6 @@ input {
     padding: 1rem;
     min-width: 40rem;
     font-size: 2rem;
-    text-transform: capitalize;
     border: none;
     border-bottom: 0.2rem solid #15133c;
     outline: none;

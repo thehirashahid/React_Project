@@ -1,5 +1,6 @@
-import React from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { GlobalStyle } from "./Styles/globalStyles";
 import { useFormik } from "formik";
 import { signUpSchema } from "./schemas";
@@ -11,16 +12,29 @@ const initialValues = {
   confirm_password: "",
 };
 
+
 const Registration = () => {
+
+  const [inputData, setInputData] = useState('');
+  const [users, setUsers] = useState([]);
+
+  const addUser = () => {
+    if (inputData) {
+      setUsers([...users, inputData]);
+      setInputData('');
+    }
+  }
+
+
+
+  const history = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
-        console.log(
-          "🚀 ~ file: Registration.jsx ~ line 11 ~ Registration ~ values",
-          values
-        );
+        localStorage.setItem("user", JSON.stringify(values));
+        history("/posts")
         action.resetForm();
       },
     });
@@ -113,12 +127,12 @@ const Registration = () => {
                   </div>
                   <div className="modal-buttons">
                     <button className="input-button" type="submit">
-                      Registration
+                      Sign Up
                     </button>
                   </div>
                 </form>
                 <p className="sign-up">
-                  Already have an account? <a href="#">Sign In now</a>
+                  Already have an account? <a href="./login">Sign In now</a>
                 </p>
               </div>
               <div className="modal-right">
@@ -170,7 +184,7 @@ const Wrapper = styled.section`
     background: #fff;
   }
   .modal-title {
-    margin: 0;
+    margin-bottom: 3%;
     font-weight: 400;
     color: #55311c;
   }
