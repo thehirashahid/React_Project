@@ -12,6 +12,10 @@ body {
     background-color: rgb(219, 230, 253);
 }
 
+/* .navbar_wrapper a {
+    padding-left: 30px;
+} */
+
 .header {
     display: flex;
     align-items: center;
@@ -93,7 +97,6 @@ input {
     padding: 1rem;
     min-width: 40rem;
     font-size: 2rem;
-    text-transform: capitalize;
     border: none;
     border-bottom: 0.2rem solid #15133c;
     outline: none;

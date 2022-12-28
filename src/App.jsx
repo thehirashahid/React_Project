@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Registration from "./registration/Registration";
 import Login from "./registration/Login";
 import Posts from './posts/posts'
+// import Header from './header';
 
 const App = () => {
   return (

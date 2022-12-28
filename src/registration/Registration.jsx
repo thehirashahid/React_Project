@@ -1,5 +1,6 @@
 import { React, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { GlobalStyle } from "./Styles/globalStyles";
 import { useFormik } from "formik";
 import { signUpSchema } from "./schemas";
@@ -13,20 +14,23 @@ const initialValues = {
 
 
 const Registration = () => {
+  const history = useNavigate();
+  const users = localStorage.getItem('user')
   const [data, setData] = useState([]);
-
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
-        const { name, email, password } = values;
-        localStorage.setItem("user", JSON.stringify([...data, values]));
-
-        console.log(
-          "🚀 ~ file: Registration.jsx ~ line 11 ~ Registration ~ values",
-          values
-        );
+        let updatedUsers;
+        console.log(`users: ${users} and type of users ${typeof users}`)
+        if (users) {
+          // users.push(values);
+          updatedUsers = [...users]
+          console.log(`After push updatedUsers: ${updatedUsers} type of updatedUsers ${typeof users}`)
+        }
+        // localStorage.setItem("user", JSON.stringify([updatedUsers]));
+        // history("/posts")
         action.resetForm();
       },
     });
