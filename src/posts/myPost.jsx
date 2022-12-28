@@ -1,37 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Search from "./search";
 import "./post.css";
-import { useLocation } from "react-router-dom";
 
 const MyPosts = () => {
     let arr = [];
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
-    arr.push(myPosts)
     function removePost(id) {
-        console.log(`IN REMOVE + ${id} and array: ${arr}`)
-        arr = arr.filter((curElement) => {
+        myPosts.filter((curElement) => {
             curElement.id != id
         })
+        console.log(myPosts)
+    }
+    useEffect(() => {
+        console.log(myPosts)
+    }, [myPosts]);
 
-    }
-    const location = useLocation();
-    console.log(`location.state: ${location.state}`)
-    let data = [];
-    // const { data, isLoading, removePost } = useGlobalContext();
-    if (location.state) {
-        console.log('data before push' + data);
-        data.push(location.state.values)
-        console.log('data before push' + data);
-    }
     return (<>
         <Search />
         <div className="posts-div">
-            {arr[0] === ''
+            {(myPosts === undefined || myPosts.length == 0)
                 ? <h2>No Post Available</h2>
-                : arr.map((post) => {
+                : myPosts.map((post) => {
                     const { title, body, userId, id } = post;
-                    console.log(post)
+                    console.log(post.title)
                     return (
                         <>
                             <div className="card" key={id}>

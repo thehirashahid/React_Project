@@ -1,95 +1,111 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { GlobalStyle } from "../registration/Styles/globalStyles";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
+
+
 const initialValues = {
-    title: "",
-    body: "",
-    userId: "1",
-    id: "345"
+  title: "",
+  body: "",
+  userId: "1",
+  id: "345"
 };
 
 const AddPost = () => {
-    const history = useNavigate();
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-        useFormik({
-            initialValues,
-            onSubmit: (values, action) => {
-                // const prevPosts = localStorage.getItem("post")
-                // prevPosts.unshift(values)
-                // console.log(`prevPosts: ${prevPosts}`)
-                localStorage.setItem("post", JSON.stringify(values));
-                history("/posts", { state: { values: values } })
-                history("/myPosts", { state: { values: values } })
-                action.resetForm();
-            },
-        });
-    console.log(
-        "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-        errors
-    );
+  const [posts, setPosts] = useState([]);
 
-    return (
-        <>
-            <GlobalStyle />
-            <Wrapper>
-                <div className="container">
-                    <div className="modal">
-                        <div className="modal-container">
-                            <div className="modal-left">
-                                <h1 className="modal-title">Add Post</h1>
-                                <form onSubmit={handleSubmit}>
-                                    <div className="input-block">
-                                        <label htmlFor="title" className="input-label">
-                                            Title
-                                        </label>
-                                        <input
-                                            type="title"
-                                            autoComplete="off"
-                                            name="title"
-                                            id="title"
-                                            placeholder="Title"
-                                            value={values.title}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                        {errors.title && touched.title ? (
-                                            <p className="form-error">{errors.title}</p>
-                                        ) : null}
-                                    </div>
-                                    <div className="input-block">
-                                        <label htmlFor="body" className="input-label">
-                                            Description
-                                        </label>
-                                        <input
-                                            type="body"
-                                            autoComplete="off"
-                                            name="body"
-                                            id="body"
-                                            placeholder="Discription"
-                                            value={values.body}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                        />
-                                        {errors.body && touched.body ? (
-                                            <p className="form-error">{errors.body}</p>
-                                        ) : null}
-                                    </div>
-                                    <div className="modal-buttons">
-                                        <button className="input-button" type="submit">
-                                            Publish
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Wrapper>
-        </>
-    );
+
+  useEffect(() => {
+    console.log(posts)
+    localStorage.setItem("post", JSON.stringify(posts));
+    history("/myPosts")
+  }, [posts]);
+
+  const history = useNavigate();
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues,
+      onSubmit: (values, action) => {
+        if (values.title != '') {
+          setPosts([...posts, values]);
+        }
+        else alert('Add title and description')
+
+        // const prevPosts = localStorage.getItem("post")
+        // prevPosts.unshift(values)
+        // console.log(`prevPosts: ${prevPosts}`)
+
+
+        // history("/myPosts", { state: { values: values } })
+        // action.resetForm();
+      },
+    });
+  // console.log(
+  //   "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
+  //   errors
+  // );
+
+  return (
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <div className="container">
+          <div className="modal">
+            <div className="modal-container">
+              <div className="modal-left">
+                <h1 className="modal-title">Add Post</h1>
+                <form onSubmit={handleSubmit}>
+                  <div className="input-block">
+                    <label htmlFor="title" className="input-label">
+                      Title
+                    </label>
+                    <input
+                      type="title"
+                      autoComplete="off"
+                      name="title"
+                      id="title"
+                      placeholder="Title"
+                      value={values.title}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.title && touched.title ? (
+                      <p className="form-error">{errors.title}</p>
+                    ) : null}
+                  </div>
+                  <div className="input-block">
+                    <label htmlFor="body" className="input-label">
+                      Description
+                    </label>
+                    <input
+                      type="body"
+                      autoComplete="off"
+                      name="body"
+                      id="body"
+                      placeholder="Discription"
+                      value={values.body}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.body && touched.body ? (
+                      <p className="form-error">{errors.body}</p>
+                    ) : null}
+                  </div>
+                  <div className="modal-buttons">
+                    <button className="input-button" type="submit">
+                      Publish
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Wrapper>
+    </>
+  );
 };
 
 const Wrapper = styled.section`
