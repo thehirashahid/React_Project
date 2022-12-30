@@ -1,100 +1,110 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { GlobalStyle } from "./Styles/globalStyles";
+import { useGlobalContext } from "../posts/context";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { loginSchema } from "./schemas/loginSchema";
-// import { Registration } from './Registration';
+import Search from "../posts/search";
+
+
 
 const initialValues = {
-  email: "",
-  password: "",
+  title: "",
+  body: "",
+  userId: "1",
+  id: "345"
 };
 
-const Login = () => {
-  const history = useNavigate();
+const AddPost = () => {
+  const { addPost } = useGlobalContext();
 
+  const getPosts = localStorage.getItem("post");
+  const myPosts = JSON.parse(getPosts)
+  console.log(myPosts)
+  const [posts, setPosts] = useState([]);
+
+
+  useEffect(() => {
+    console.log(posts)
+    localStorage.setItem("post", JSON.stringify(posts));
+    history("/myPosts")
+  }, [posts]);
+
+  const history = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
-      validationSchema: loginSchema,
       onSubmit: (values, action) => {
-        const getUserArr = localStorage.getItem("user");
-        const userData = JSON.parse(getUserArr)
-        const userLogin = userData.filter((el, k) => {
-          return el.email === values.email && el.password === values.password
-        });
-        if (userLogin.length === 0) alert("Invalid credentials");
-        else history("/posts")
-        action.resetForm();
+        if (values.title != '') {
+          // setPosts([...posts, values]);
+          addPost(values);
+        }
+        else alert('Add title and description')
+
+        // const prevPosts = localStorage.getItem("post")
+        // prevPosts.unshift(values)
+        // console.log(`prevPosts: ${prevPosts}`)
+
+
+        // history("/myPosts", { state: { values: values } })
+        // action.resetForm();
       },
     });
-  console.log(
-    "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-    errors
-  );
+  // console.log(
+  //   "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
+  //   errors
+  // );
 
   return (
     <>
-      <GlobalStyle />
       <Wrapper>
         <div className="container">
           <div className="modal">
             <div className="modal-container">
               <div className="modal-left">
-                <h1 className="modal-title">Login</h1>
+                <h1 className="modal-title">Add Post</h1>
                 <form onSubmit={handleSubmit}>
                   <div className="input-block">
-                    <label htmlFor="email" className="input-label">
-                      Email
+                    <label htmlFor="title" className="input-label">
+                      Title
                     </label>
                     <input
-                      type="email"
+                      type="title"
                       autoComplete="off"
-                      name="email"
-                      id="email"
-                      placeholder="Email"
-                      value={values.email}
+                      name="title"
+                      id="title"
+                      placeholder="Title"
+                      value={values.title}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-                    {errors.email && touched.email ? (
-                      <p className="form-error">{errors.email}</p>
+                    {errors.title && touched.title ? (
+                      <p className="form-error">{errors.title}</p>
                     ) : null}
                   </div>
                   <div className="input-block">
-                    <label htmlFor="password" className="input-label">
-                      Password
+                    <label htmlFor="body" className="input-label">
+                      Description
                     </label>
                     <input
-                      type="password"
+                      type="body"
                       autoComplete="off"
-                      name="password"
-                      id="password"
-                      placeholder="Password"
-                      value={values.password}
+                      name="body"
+                      id="body"
+                      placeholder="Discription"
+                      value={values.body}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-                    {errors.password && touched.password ? (
-                      <p className="form-error">{errors.password}</p>
+                    {errors.body && touched.body ? (
+                      <p className="form-error">{errors.body}</p>
                     ) : null}
                   </div>
                   <div className="modal-buttons">
                     <button className="input-button" type="submit">
-                      Login
+                      Publish
                     </button>
                   </div>
                 </form>
-                <p className="sign-up">
-                  Don't have any account? <a href="./">Sign Up now</a>
-                </p>
-              </div>
-              <div className="modal-right">
-                <img
-                  src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80"
-                  alt=""
-                />
               </div>
             </div>
           </div>
@@ -214,7 +224,6 @@ const Wrapper = styled.section`
 
   .input-label {
     font-size: 11px;
-    text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 0.7px;
     color: #8c7569;
@@ -267,4 +276,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default Login;
+export default AddPost;

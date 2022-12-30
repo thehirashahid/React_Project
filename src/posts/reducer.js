@@ -16,6 +16,12 @@ const reducer = (state, action) => {
                 ...state,
                 data: state.data.filter((curElement) => curElement.id != action.payload),
             }
+        case "ADD_POST":
+            return {
+                ...state,
+                data: state.data.unshift(action.payload.data),
+                // newPost: state.myPost.push(action.payload),
+            }
         // case "SEARCH_POST":
         //     return {
         //         ...state,

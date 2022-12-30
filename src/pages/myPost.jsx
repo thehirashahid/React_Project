@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Search from "./search";
-import "./post.css";
+import Search from "../posts/search";
+import { useGlobalContext } from "../posts/context";
+import "../posts/post.css";
 
 const MyPosts = () => {
+    const { data } = useGlobalContext();
+    console.log('in data: ' + data)
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
     function removePost(id) {
@@ -22,7 +25,6 @@ const MyPosts = () => {
     }, [myPosts]);
 
     return (<>
-        <Search />
         <div className="posts-div">
             {(myPosts === undefined || myPosts == null)
                 ? <h2>No Post Available</h2>

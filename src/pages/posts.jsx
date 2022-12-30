@@ -1,12 +1,13 @@
 import React from "react";
-import { useGlobalContext } from "./context";
-import Search from "./search";
-import "./post.css";
+import { useGlobalContext } from "../posts/context";
+import Search from "../posts/search";
+import "../posts/post.css";
 // import { useLocation } from "react-router-dom";
 
 const Posts = () => {
     // const location = useLocation();
-    const { data, isLoading } = useGlobalContext();
+    const { data, isLoading, removePost } = useGlobalContext();
+    console.log('in data: ' + data)
     // if (location.state) {
     //     data.push(location.state)
     //     console.log(data);
@@ -33,6 +34,7 @@ const Posts = () => {
                                 <p>
                                     By <span> {userId} </span> | <span>{id}</span> comments
                                 </p>
+                                <a href="#" onClick={() => removePost(id)}>Remove</a>
                             </div>
                         </div>
                     </>
