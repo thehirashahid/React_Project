@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import './css/header.css';
 
 const Header = () => {
@@ -7,9 +9,9 @@ const Header = () => {
             <nav className="nav" >
                 <a href="/posts" className="Posts_App" >Posts App</a>
                 <ul>
-                    <li className="active" > <a href="/posts" >All Posts</a></li>
-                    <li><a href="/addPost" >Add Post</a></li>
-                    <li> <a href="/myPosts" >My Posts</a></li>
+                    <li className="active" > <Link to={"/allposts"} >All Posts</Link></li>
+                    <li><Link to={"/addpost"}  >Add Post</Link></li>
+                    <li><Link to={"/myposts"}  >My Posts</Link></li>
                 </ul>
             </nav>
         </>

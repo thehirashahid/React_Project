@@ -24,14 +24,16 @@ const AddPost = () => {
   useEffect(() => {
     console.log(posts)
     localStorage.setItem("post", JSON.stringify(posts));
-    history("/myPosts")
+    navigate("/myPosts")
   }, [posts]);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
-      onSubmit: (values, action) => {
+      handleSubmit: (event) => event.preventDefault(),
+      onSubmit: (values, action,) => {
+
         if (values.title != '') {
           // setPosts([...posts, values]);
           addPost(values);
@@ -43,7 +45,7 @@ const AddPost = () => {
         // console.log(`prevPosts: ${prevPosts}`)
 
 
-        // history("/myPosts", { state: { values: values } })
+        navigate("/myPosts", { state: { values: values } })
         // action.resetForm();
       },
     });
