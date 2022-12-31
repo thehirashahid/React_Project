@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Search from "../posts/search";
-import { useGlobalContext } from "../posts/context";
-import "../posts/post.css";
+import React, { useEffect } from "react";
+// import { useGlobalContext } from "../posts/context";
+import "../css/post.css";
 
 const MyPosts = () => {
-    const { data } = useGlobalContext();
-    console.log('in data: ' + data)
+    // const { data } = useGlobalContext();
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
     function removePost(id) {

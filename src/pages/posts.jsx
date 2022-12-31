@@ -1,7 +1,6 @@
 import React from "react";
-import { useGlobalContext } from "../posts/context";
-import Search from "../posts/search";
-import "../posts/post.css";
+import { useGlobalContext } from "../context";
+import "../css/post.css";
 // import { useLocation } from "react-router-dom";
 
 const Posts = () => {
@@ -21,8 +20,8 @@ const Posts = () => {
         );
     }
     return (<>
-        <Search />
         <div className="posts-div">
+            <h1>All Posts</h1>
             {data.map((post) => {
                 const { title, body, userId, id } = post;
                 return (

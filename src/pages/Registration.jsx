@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
-import { signUpSchema } from "../registration/schemas/registration";
-import "../registration/Styles/registration.css"
-import "../registration/Styles/globalStyle.css"
+import { signUpSchema } from "../schemas/registration";
+import "../css/registration.css"
+
 
 const initialValues = {
   name: "",
@@ -15,7 +15,6 @@ const initialValues = {
 
 
 const Registration = () => {
-
   const [inputData, setInputData] = useState('');
   const [users, setUsers] = useState([]);
 

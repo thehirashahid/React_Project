@@ -5,15 +5,14 @@ import Login from "./pages/Login";
 import Posts from './pages/posts'
 import AddPost from './pages/addPost';
 import MyPosts from "./pages/myPost";
-import allComments from "./comments/allComments"
 import Header from "./header";
-// import Header from './header';
 
 const App = () => {
   return (
     <>
       <div className="App" >
         <Router>
+          <Header />
           <Routes>
             <Route path="/posts" element={<Posts />} />
             <Route path="/login" element={<Login />} />

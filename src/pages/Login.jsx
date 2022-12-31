@@ -2,9 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
-import { loginSchema } from "../registration/schemas/loginSchema";
-import "../registration/Styles/registration.css"
-// import "../registration/Styles/globalStyle.css"
+import { loginSchema } from "../schemas/loginSchema";
+import "../css/registration.css"
 
 const initialValues = {
   email: "",
