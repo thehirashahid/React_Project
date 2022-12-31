@@ -54,8 +54,8 @@ const AddPost = () => {
 
   return (
     <>
-      <div className="modal">
-        <div className="modal-container">
+      <div className="modal-post">
+        <div className="modal-container-post">
           <div className="modal-left">
             <h1 className="modal-title">Add Post</h1>
             <form onSubmit={handleSubmit}>
