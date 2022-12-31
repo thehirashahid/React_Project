@@ -14,20 +14,20 @@ const initialValues = {
 
 const AddPost = () => {
   const { addPost } = useGlobalContext();
-
-  const getPosts = localStorage.getItem("post");
-  const myPosts = JSON.parse(getPosts)
-  console.log(myPosts)
+  const navigate = useNavigate();
+  // const getPosts = localStorage.getItem("post");
+  // const myPosts = JSON.parse(getPosts)
+  // console.log(myPosts)
   const [posts, setPosts] = useState([]);
 
 
-  useEffect(() => {
-    console.log(posts)
-    localStorage.setItem("post", JSON.stringify(posts));
-    navigate("/myPosts")
-  }, [posts]);
+  // useEffect(() => {
+  //   console.log(posts)
+  //   localStorage.setItem("post", JSON.stringify(posts));
+  //   navigate("/addposts")
+  // }, [posts]);
 
-  const navigate = useNavigate();
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
@@ -45,7 +45,7 @@ const AddPost = () => {
         // console.log(`prevPosts: ${prevPosts}`)
 
 
-        navigate("/myPosts", { state: { values: values } })
+        // navigate("/myPosts", { state: { values: values } })
         // action.resetForm();
       },
     });

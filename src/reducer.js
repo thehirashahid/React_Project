@@ -17,6 +17,9 @@ const reducer = (state, action) => {
                 data: state.data.filter((curElement) => curElement.id != action.payload),
             }
         case "ADD_POST":
+            console.log(`coming : ${action.payload.data} and state: ${state.data.length} `)
+            // state.data.unshift(action.payload.data),
+            //     console.log(`state after push: ${state.data.length} `)
             return {
                 ...state,
                 data: state.data.unshift(action.payload.data),

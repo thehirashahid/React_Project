@@ -15,17 +15,17 @@ const initialValues = {
 
 
 const Registration = () => {
-  const [inputData, setInputData] = useState('');
-  const [users, setUsers] = useState([]);
+  let usersData = JSON.parse(localStorage.getItem("users")) || [];
 
-  const addUser = () => {
-    if (inputData) {
-      setUsers([...users, inputData]);
-      setInputData('');
-    }
-  }
+  // const [inputData, setInputData] = useState('');
+  // const [users, setUsers] = useState([]);
 
-
+  // const addUser = () => {
+  //   if (inputData) {
+  //     setUsers([...users, inputData]);
+  //     setInputData('');
+  //   }
+  // }
 
   const history = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -33,8 +33,14 @@ const Registration = () => {
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
-        localStorage.setItem("user", JSON.stringify(values));
-        history("/posts")
+        const userExists = usersData.find(user => user.email === values.email);
+        if (userExists) alert('User Already exists');
+        else {
+          usersData.push(values);
+          localStorage.setItem("users", JSON.stringify(usersData));
+          console.log(`getting data after push: ${usersData}`)
+          history("/allposts")
+        }
         action.resetForm();
       },
     });
