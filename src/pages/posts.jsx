@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useGlobalContext } from "../context";
+import { UserContext } from "../UserContext";
 
 import "../css/post.css";
 
 const Posts = () => {
     const { data, isLoading, removePost } = useGlobalContext();
-    console.log(`in post ${data}`)
+    const { user } = useContext(UserContext);
     if (isLoading) {
         return (
             <>
@@ -25,7 +26,7 @@ const Posts = () => {
                             <p>{body}</p>
                             <div className="card-button" >
                                 <p>
-                                    By <span> {userId} </span> | <span>{id}</span> comments
+                                    By <span> {userId} </span> | <span></span> comments
                                 </p>
                             </div>
                         </div>

@@ -1,7 +1,8 @@
-import { React, useState } from "react";
+import { React, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
+import { UserContext } from "../UserContext";
 import { signUpSchema } from "../schemas/registration";
 import "../css/registration.css"
 
@@ -15,6 +16,7 @@ const initialValues = {
 
 
 const Registration = () => {
+  const { user, setUser } = useContext(UserContext);
   let usersData = JSON.parse(localStorage.getItem("users")) || [];
   const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ const Registration = () => {
         else {
           usersData.push(values);
           localStorage.setItem("users", JSON.stringify(usersData));
+          setUser(values);
           navigate("/allposts")
         }
         action.resetForm();

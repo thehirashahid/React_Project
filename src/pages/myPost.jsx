@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useGlobalContext } from "../posts/context";
+import { UserContext } from "../UserContext";
 import "../css/post.css";
 
 const MyPosts = () => {
-    const navigate = useNavigate();
     let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    let [posts, setPosts] = useState(userPosts);
+    const { user } = useContext(UserContext);
+    var my_posts = userPosts.filter((curElement) => curElement.userEmail === user.email);
+    const navigate = useNavigate();
+
+    let [posts, setPosts] = useState(my_posts);
 
     function removePost(id) {
-        var updatedPosts = userPosts.filter((curElement) => curElement.id != id);
+        let updatedPosts = userPosts.filter((curElement) => curElement.id != id);
         setPosts(updatedPosts)
         localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
 
     function editPost(id, title, body) {
-        // navigate('/addPost')
+        navigate('/addPost', { state: { id, title, body } })
     }
 
     return (<>
@@ -31,7 +34,7 @@ const MyPosts = () => {
                                 <p>{body}</p>
                                 <div className="card-button" >
                                     <p>
-                                        By <span> {userId} </span> | <span>{id}</span> comments
+                                        By <span> {userId} </span> | <span></span> comments
                                     </p>
                                     <a className="edit" href="#" onClick={() => editPost(id, title, body)}>Edit</a>
                                     <a href="#" onClick={() => removePost(id)}>Remove</a>

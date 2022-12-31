@@ -1,21 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
 
-import { useGlobalContext } from "../context";
+import { UserContext } from "../UserContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { v4 as uuid } from 'uuid';
 import '../css/addPost.css'
 
 const initialValues = {
   title: "",
   body: "",
   userId: "1",
-  id: "345"
+  userEmail: "",
+  id: "345",
+
 };
 
+
+
 const AddPost = () => {
+  const [data, setData] = useState(initialValues);
+  console.log(data.title)
+  const unique_id = uuid();
   let usersPost = JSON.parse(localStorage.getItem("posts")) || [];
   const navigate = useNavigate();
-
+  const location = useLocation();
+  if (location.state) {
+    console.log(location.state.title)
+    // setData.title = location.state.title;
+    console.log(setData)
+  }
+  const { user } = useContext(UserContext);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
@@ -23,7 +37,10 @@ const AddPost = () => {
       handleSubmit: (event) => event.preventDefault(),
       onSubmit: (values, action,) => {
         if (values.title != '' && values.body != '') {
-          usersPost.push(values);
+          values.userId = user.name;
+          values.userEmail = user.email;
+          values.id = unique_id;
+          usersPost.unshift(values);
           localStorage.setItem("posts", JSON.stringify(usersPost));
           navigate('/myposts')
         }

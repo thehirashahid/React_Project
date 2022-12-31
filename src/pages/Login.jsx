@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 import { loginSchema } from "../schemas/loginSchema";
+import { UserContext } from "../UserContext";
 import "../css/registration.css"
 
 const initialValues = {
@@ -11,6 +12,7 @@ const initialValues = {
 };
 
 const Login = () => {
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   let usersData = JSON.parse(localStorage.getItem("users")) || [];
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -19,7 +21,10 @@ const Login = () => {
       validationSchema: loginSchema,
       onSubmit: (values, action) => {
         const userExists = usersData.find(user => user.email === values.email && user.password === values.password);
-        if (userExists) navigate("/allposts");
+        if (userExists) {
+          setUser(userExists);
+          navigate("/allposts");
+        }
         else alert("Invalid Credentials")
         action.resetForm();
       },
