@@ -16,18 +16,8 @@ const initialValues = {
 
 const Registration = () => {
   let usersData = JSON.parse(localStorage.getItem("users")) || [];
+  const navigate = useNavigate();
 
-  // const [inputData, setInputData] = useState('');
-  // const [users, setUsers] = useState([]);
-
-  // const addUser = () => {
-  //   if (inputData) {
-  //     setUsers([...users, inputData]);
-  //     setInputData('');
-  //   }
-  // }
-
-  const history = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
@@ -38,8 +28,7 @@ const Registration = () => {
         else {
           usersData.push(values);
           localStorage.setItem("users", JSON.stringify(usersData));
-          console.log(`getting data after push: ${usersData}`)
-          history("/allposts")
+          navigate("/allposts")
         }
         action.resetForm();
       },

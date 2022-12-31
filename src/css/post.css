@@ -81,6 +81,10 @@ span {
     font-size: 1.6rem;
 }
 
+.edit {
+    margin-left: 40%;
+}
+
 .card-button a:last-child {
     color: red;
 }

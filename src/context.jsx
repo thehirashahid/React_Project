@@ -5,7 +5,6 @@ let API = 'https://jsonplaceholder.typicode.com/posts';
 
 const initialState = {
     arr: [],
-    // myPost: [],
     isLoading: true,
 }
 
@@ -17,10 +16,17 @@ const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const fetchApiData = async (url) => {
+        let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
         dispatch({ type: "SET_LOADING" });
         try {
             const res = await fetch(url);
             const data = await res.json();
+            if (userPosts.length != 0) {
+                userPosts.map((post) => {
+                    data.unshift(post);
+                })
+            }
+            console.log(data)
             dispatch({
                 type: "GET_POSTS",
                 payload: {
@@ -32,31 +38,12 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    const removePost = (post_id) => {
-        dispatch({ type: "REMOVE_POST", payload: post_id });
-    }
-
-    const addPost = (post) => {
-        dispatch({
-            type: "ADD_POST", payload: {
-                data: post,
-            }
-        });
-    }
-
-    // const searchPost = (searchTitle) => {
-    //     dispatch({
-    //         type: "SEARCH_POST",
-    //         payload: searchTitle
-    //     });
-    // }
-
     useEffect(() => {
         fetchApiData(API);
     }, []);
 
     return (
-        <AppContext.Provider value={{ ...state, removePost, addPost }}>
+        <AppContext.Provider value={{ ...state }}>
             {children}
         </AppContext.Provider>
     )

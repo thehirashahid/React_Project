@@ -13,19 +13,8 @@ const initialValues = {
 };
 
 const AddPost = () => {
-  const { addPost } = useGlobalContext();
+  let usersPost = JSON.parse(localStorage.getItem("posts")) || [];
   const navigate = useNavigate();
-  // const getPosts = localStorage.getItem("post");
-  // const myPosts = JSON.parse(getPosts)
-  // console.log(myPosts)
-  const [posts, setPosts] = useState([]);
-
-
-  // useEffect(() => {
-  //   console.log(posts)
-  //   localStorage.setItem("post", JSON.stringify(posts));
-  //   navigate("/addposts")
-  // }, [posts]);
 
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -33,26 +22,15 @@ const AddPost = () => {
       initialValues,
       handleSubmit: (event) => event.preventDefault(),
       onSubmit: (values, action,) => {
-
-        if (values.title != '') {
-          // setPosts([...posts, values]);
-          addPost(values);
+        if (values.title != '' && values.body != '') {
+          usersPost.push(values);
+          localStorage.setItem("posts", JSON.stringify(usersPost));
+          navigate('/myposts')
         }
         else alert('Add title and description')
-
-        // const prevPosts = localStorage.getItem("post")
-        // prevPosts.unshift(values)
-        // console.log(`prevPosts: ${prevPosts}`)
-
-
-        // navigate("/myPosts", { state: { values: values } })
-        // action.resetForm();
       },
     });
-  // console.log(
-  //   "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-  //   errors
-  // );
+
 
   return (
     <>

@@ -5,7 +5,7 @@ import "../css/post.css";
 
 const Posts = () => {
     const { data, isLoading, removePost } = useGlobalContext();
-    if (data) console.log('in data: ' + data.length)
+    console.log(`in post ${data}`)
     if (isLoading) {
         return (
             <>
@@ -16,7 +16,7 @@ const Posts = () => {
     return (<>
         <div className="posts-div">
             <h1>All Posts</h1>
-            {/* {data.map((post) => {
+            {data.map((post) => {
                 const { title, body, userId, id } = post;
                 return (
                     <>
@@ -27,12 +27,11 @@ const Posts = () => {
                                 <p>
                                     By <span> {userId} </span> | <span>{id}</span> comments
                                 </p>
-                                <a href="#" onClick={() => removePost(id)}>Remove</a>
                             </div>
                         </div>
                     </>
                 );
-            })} */}
+            })}
         </div>
     </>
     );

@@ -1,34 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { useGlobalContext } from "../posts/context";
 import "../css/post.css";
 
 const MyPosts = () => {
-    // const { data } = useGlobalContext();
-    const getPosts = localStorage.getItem("post");
-    const myPosts = JSON.parse(getPosts)
+    const navigate = useNavigate();
+    let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    let [posts, setPosts] = useState(userPosts);
+
     function removePost(id) {
-        // myPosts.filter((curElement) => {
-        //     console.log(`curElement: ${curElement.id} and id: ${id}`)
-        //     curElement.id != id
-        // })
-        // console.log(myPosts)
-        for (var i = 0; i < myPosts.length; i++) {
-            if (myPosts[i].id === id) {
-                myPosts.splice(i, 1);
-            }
-        }
+        var updatedPosts = userPosts.filter((curElement) => curElement.id != id);
+        setPosts(updatedPosts)
+        localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
-    useEffect(() => {
-        console.log(myPosts)
-    }, [myPosts]);
+
+    function editPost(id, title, body) {
+        // navigate('/addPost')
+    }
 
     return (<>
         <div className="posts-div">
-            {(myPosts === undefined || myPosts == null)
+            {(posts === undefined || posts.length === 0)
                 ? <h2>No Post Available</h2>
-                : myPosts.map((post) => {
+                : posts.map((post) => {
                     const { title, body, userId, id } = post;
-                    console.log(post.title)
                     return (
                         <>
                             <div className="card" key={id}>
@@ -38,6 +33,7 @@ const MyPosts = () => {
                                     <p>
                                         By <span> {userId} </span> | <span>{id}</span> comments
                                     </p>
+                                    <a className="edit" href="#" onClick={() => editPost(id, title, body)}>Edit</a>
                                     <a href="#" onClick={() => removePost(id)}>Remove</a>
                                 </div>
                             </div>

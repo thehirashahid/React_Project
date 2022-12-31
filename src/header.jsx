@@ -9,7 +9,7 @@ const Header = () => {
             <nav className="nav" >
                 <a href="/posts" className="Posts_App" >Posts App</a>
                 <ul>
-                    <li className="active" > <Link to={"/allposts"} >All Posts</Link></li>
+                    <li ><Link to={"/allposts"} >All Posts</Link></li>
                     <li><Link to={"/addpost"}  >Add Post</Link></li>
                     <li><Link to={"/myposts"}  >My Posts</Link></li>
                 </ul>

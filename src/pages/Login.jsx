@@ -12,26 +12,18 @@ const initialValues = {
 
 const Login = () => {
   const navigate = useNavigate();
-
+  let usersData = JSON.parse(localStorage.getItem("users")) || [];
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values, action) => {
-        const getUserArr = localStorage.getItem("user");
-        const userData = JSON.parse(getUserArr)
-        const userLogin = userData.filter((el, k) => {
-          return el.email === values.email && el.password === values.password
-        });
-        if (userLogin.length === 0) alert("Invalid credentials");
-        else navigate("/posts")
+        const userExists = usersData.find(user => user.email === values.email && user.password === values.password);
+        if (userExists) navigate("/allposts");
+        else alert("Invalid Credentials")
         action.resetForm();
       },
     });
-  console.log(
-    "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-    errors
-  );
 
   return (
     <>
