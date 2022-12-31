@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from "react";
-import Search from "./search";
-import "./post.css";
+import React, { useEffect } from "react";
+// import { useGlobalContext } from "../posts/context";
+import "../css/post.css";
 
 const MyPosts = () => {
+    // const { data } = useGlobalContext();
     const getPosts = localStorage.getItem("post");
     const myPosts = JSON.parse(getPosts)
     function removePost(id) {
-        myPosts.filter((curElement) => {
-            curElement.id != id
-        })
-        console.log(myPosts)
+        // myPosts.filter((curElement) => {
+        //     console.log(`curElement: ${curElement.id} and id: ${id}`)
+        //     curElement.id != id
+        // })
+        // console.log(myPosts)
+        for (var i = 0; i < myPosts.length; i++) {
+            if (myPosts[i].id === id) {
+                myPosts.splice(i, 1);
+            }
+        }
     }
     useEffect(() => {
         console.log(myPosts)
     }, [myPosts]);
 
     return (<>
-        <Search />
         <div className="posts-div">
             {(myPosts === undefined || myPosts == null)
                 ? <h2>No Post Available</h2>

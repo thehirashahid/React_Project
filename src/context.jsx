@@ -5,6 +5,7 @@ let API = 'https://jsonplaceholder.typicode.com/posts';
 
 const initialState = {
     arr: [],
+    // myPost: [],
     isLoading: true,
 }
 
@@ -17,11 +18,9 @@ const AppProvider = ({ children }) => {
 
     const fetchApiData = async (url) => {
         dispatch({ type: "SET_LOADING" });
-
         try {
             const res = await fetch(url);
             const data = await res.json();
-            console.log(data);
             dispatch({
                 type: "GET_POSTS",
                 payload: {
@@ -37,6 +36,14 @@ const AppProvider = ({ children }) => {
         dispatch({ type: "REMOVE_POST", payload: post_id });
     }
 
+    const addPost = (post) => {
+        dispatch({
+            type: "ADD_POST", payload: {
+                data: post,
+            }
+        });
+    }
+
     // const searchPost = (searchTitle) => {
     //     dispatch({
     //         type: "SEARCH_POST",
@@ -49,7 +56,7 @@ const AppProvider = ({ children }) => {
     }, []);
 
     return (
-        <AppContext.Provider value={{ ...state, removePost }}>
+        <AppContext.Provider value={{ ...state, removePost, addPost }}>
             {children}
         </AppContext.Provider>
     )
