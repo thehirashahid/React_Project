@@ -32,7 +32,6 @@ const AppProvider = ({ children }) => {
                     setPosts(data);
                 })
             }
-            console.log(`all Posts: ${data}`)
             dispatch({
                 type: "GET_POSTS",
                 payload: {

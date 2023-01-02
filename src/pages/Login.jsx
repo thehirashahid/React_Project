@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { loginSchema } from "../schemas/loginSchema";
 import { UserContext } from "../useContext/UserContext";
@@ -81,7 +81,7 @@ const Login = () => {
                 </div>
               </form>
               <p className="sign-up">
-                Don't have any account? <a href="./">Sign Up now</a>
+                Don't have any account? <Link to="./">Sign Up now</Link>
               </p>
             </div>
             <div className="modal-right">

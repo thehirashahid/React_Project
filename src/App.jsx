@@ -4,6 +4,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Posts from './pages/posts'
 import AddPost from './pages/addPost';
+import EditPost from './pages/editPost';
 import MyPosts from "./pages/myPost";
 import Header from "./header";
 
@@ -27,11 +28,12 @@ const App = () => {
               <Router>
                 <Header />
                 <Routes>
-                  <Route path="/allposts" element={<Posts />} />
-                  <Route path="/login" element={<Login />} />
                   <Route path="/" element={<Registration />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/allposts" element={<Posts />} />
                   <Route path="/addPost" element={<AddPost />} />
-                  <Route path="/myPosts" element={<MyPosts />} />
+                  <Route path="/editPost/:id" element={<EditPost />} />
+                  <Route path="/myPosts/" element={<MyPosts />} />
                   <Route path="/allComments" element={<allComments />} />
                 </Routes>
               </Router>

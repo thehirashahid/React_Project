@@ -7,23 +7,22 @@ import { PostContext } from "../useContext/PostContext";
 import { useNavigate } from "react-router-dom";
 import '../css/addPost.css'
 
-const initialValues = {
+var initialValues = {
   title: "",
   body: "",
-  userId: "1",
+  userId: "",
   userEmail: "",
-  id: "345",
-
+  id: "",
 };
 
-
+console.log(initialValues.id);
 
 const AddPost = () => {
+
   const { posts, setPosts } = useContext(PostContext);
-  // const [data, setData] = useState(initialValues);
   let allPosts = JSON.parse(localStorage.getItem(["posts"])) || [];
-  // let lastPostId = posts[(posts.length) - 1].id;
   const navigate = useNavigate();
+
   const { user } = useContext(UserContext);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({

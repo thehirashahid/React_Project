@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, Route, Routes } from "react-router-dom";
 
 import { PostContext } from "../useContext/PostContext";
 import { UserContext } from "../useContext/UserContext";
@@ -23,10 +23,6 @@ const MyPosts = () => {
         localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
 
-    function editPost(id, title, body) {
-        navigate('/addPost', { state: { id, title, body } })
-    }
-
     return (<>
         <div className="posts-div">
             {(myPosts === undefined || myPosts.length === 0)
@@ -42,8 +38,11 @@ const MyPosts = () => {
                                     <p>
                                         By <span> {userId} </span> | <span></span> comments
                                     </p>
-                                    <a className="edit" href="#" onClick={() => editPost(id, title, body)}>Edit</a>
-                                    <a href="#" onClick={() => removePost(id)}>Remove</a>
+                                    <Link className="edit" to={{
+                                        pathname: `/editPost/${id}`,
+                                        state: post
+                                    }} >Edit</Link>
+                                    <Link onClick={() => removePost(id)}  >Remove</Link>
                                 </div>
                             </div>
                         </>

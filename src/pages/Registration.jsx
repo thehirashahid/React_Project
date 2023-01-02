@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 
 import { UserContext } from "../useContext/UserContext";
@@ -128,7 +128,7 @@ const Registration = () => {
                 </div>
               </form>
               <p className="sign-up">
-                Already have an account? <a href="./login">Sign In now</a>
+                Already have an account? <Link to="./login">Sign In now</Link>
               </p>
             </div>
             <div className="modal-right">
