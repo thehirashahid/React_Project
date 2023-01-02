@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
 import { loginSchema } from "../schemas/loginSchema";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../useContext/UserContext";
 import "../css/registration.css"
 
 const initialValues = {

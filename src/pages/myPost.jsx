@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../UserContext";
+
+import { PostContext } from "../useContext/PostContext";
+import { UserContext } from "../useContext/UserContext";
 import "../css/post.css";
 
 const MyPosts = () => {
@@ -9,11 +11,11 @@ const MyPosts = () => {
     var my_posts = userPosts.filter((curElement) => curElement.userEmail === user.email);
     const navigate = useNavigate();
 
-    let [posts, setPosts] = useState(my_posts);
+    let [myPosts, setMyPosts] = useState(my_posts);
 
     function removePost(id) {
         let updatedPosts = userPosts.filter((curElement) => curElement.id != id);
-        setPosts(updatedPosts)
+        setMyPosts(updatedPosts)
         localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
 
@@ -23,9 +25,9 @@ const MyPosts = () => {
 
     return (<>
         <div className="posts-div">
-            {(posts === undefined || posts.length === 0)
+            {(myPosts === undefined || myPosts.length === 0)
                 ? <h2>No Post Available</h2>
-                : posts.map((post) => {
+                : myPosts.map((post) => {
                     const { title, body, userId, id } = post;
                     return (
                         <>

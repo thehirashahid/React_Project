@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 
-import { UserContext } from "../UserContext";
-import { useNavigate, useLocation } from "react-router-dom";
-import { v4 as uuid } from 'uuid';
+import { UserContext } from "../useContext/UserContext";
+import { PostContext } from "../useContext/PostContext";
+import { useNavigate } from "react-router-dom";
 import '../css/addPost.css'
 
 const initialValues = {
@@ -18,19 +18,12 @@ const initialValues = {
 
 
 const AddPost = () => {
-  const [data, setData] = useState(initialValues);
-  console.log(data.title)
-  const unique_id = uuid();
-  let usersPost = JSON.parse(localStorage.getItem("posts")) || [];
+  const { post, setPost } = useContext(PostContext);
+  // const [data, setData] = useState(initialValues);
+  let myPosts = JSON.parse(localStorage.getItem(["myPosts"])) || [];
+  let lastPostId = allPosts[(allPosts.length) - 1].id;
   const navigate = useNavigate();
-  const location = useLocation();
-  if (location.state) {
-    console.log(location.state.title)
-    // setData.title = location.state.title;
-    console.log(setData)
-  }
   const { user } = useContext(UserContext);
-
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
@@ -39,9 +32,11 @@ const AddPost = () => {
         if (values.title != '' && values.body != '') {
           values.userId = user.name;
           values.userEmail = user.email;
-          values.id = unique_id;
-          usersPost.unshift(values);
-          localStorage.setItem("posts", JSON.stringify(usersPost));
+          values.id = lastPostId++;
+          myPosts.unshift(values);
+          // setPost(myPosts);
+          localStorage.setItem("myPosts", JSON.stringify(myPosts));
+          localStorage.setItem("allPosts", JSON.stringify(allPosts));
           navigate('/myposts')
         }
         else alert('Add title and description')

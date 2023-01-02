@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
-import { useGlobalContext } from "../context";
-import { UserContext } from "../UserContext";
+
+// import { PostContext } from "../useContext/PostContext";
+import { useGlobalContext } from "../useContext/context";
+import { UserContext } from "../useContext/UserContext";
 
 import "../css/post.css";
 
 const Posts = () => {
+    // const { post, setPost } = useContext(PostContext);
     const { data, isLoading, removePost } = useGlobalContext();
     const { user } = useContext(UserContext);
     if (isLoading) {

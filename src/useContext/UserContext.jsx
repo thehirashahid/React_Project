@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect } from "react";
+import React, { useContext } from "react";
 
 const UserContext = React.createContext(null);
 
@@ -6,7 +6,7 @@ const UserProvider = ({ userr }) => {
     console.log(`userprovider: ${userr}`)
     return (
         <UserContext.Provider value={userr}>
-            {/* {children} */}
+
         </UserContext.Provider>
     )
 }
