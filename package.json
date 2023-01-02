@@ -17,8 +17,10 @@
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
+    "react-uuid": "^2.0.0",
     "reactstrap": "^9.1.5",
     "styled-components": "^5.3.5",
+    "uuidv4": "^6.2.13",
     "yup": "^0.32.11"
   },
   "devDependencies": {

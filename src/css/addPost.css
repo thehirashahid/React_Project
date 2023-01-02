@@ -1,5 +1,5 @@
-.modal {
-    padding-top: 25%;
+.modal-post {
+    padding-top: 8%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
     transition: 0.4s;
 }
 
-.modal-container {
+.modal-container-post {
     display: flex;
     max-width: 60vw;
     width: 100%;

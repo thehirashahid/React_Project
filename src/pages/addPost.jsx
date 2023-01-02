@@ -1,61 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
-import { useGlobalContext } from "../context";
+import { UserContext } from "../useContext/UserContext";
+import { PostContext } from "../useContext/PostContext";
+import { useNavigate } from "react-router-dom";
 import '../css/addPost.css'
 
-const initialValues = {
+var initialValues = {
   title: "",
   body: "",
-  userId: "1",
-  id: "345"
+  userId: "",
+  userEmail: "",
+  id: "",
 };
 
+console.log(initialValues.id);
+
 const AddPost = () => {
-  const { addPost } = useGlobalContext();
 
-  const getPosts = localStorage.getItem("post");
-  const myPosts = JSON.parse(getPosts)
-  console.log(myPosts)
-  const [posts, setPosts] = useState([]);
+  const { posts, setPosts } = useContext(PostContext);
+  let allPosts = JSON.parse(localStorage.getItem(["posts"])) || [];
+  const navigate = useNavigate();
 
-
-  useEffect(() => {
-    console.log(posts)
-    localStorage.setItem("post", JSON.stringify(posts));
-    history("/myPosts")
-  }, [posts]);
-
-  const history = useNavigate();
+  const { user } = useContext(UserContext);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
-      onSubmit: (values, action) => {
-        if (values.title != '') {
-          // setPosts([...posts, values]);
-          addPost(values);
+      handleSubmit: (event) => event.preventDefault(),
+      onSubmit: (values, action,) => {
+        if (values.title != '' && values.body != '') {
+          values.userId = user.name;
+          values.userEmail = user.email;
+          values.id = uuidv4();
+          allPosts.unshift(values);
+          posts.unshift(values);
+          setPosts(posts);
+          localStorage.setItem("posts", JSON.stringify(allPosts));
+          navigate('/myposts')
         }
         else alert('Add title and description')
-
-        // const prevPosts = localStorage.getItem("post")
-        // prevPosts.unshift(values)
-        // console.log(`prevPosts: ${prevPosts}`)
-
-
-        // history("/myPosts", { state: { values: values } })
-        // action.resetForm();
       },
     });
-  // console.log(
-  //   "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-  //   errors
-  // );
+
 
   return (
     <>
-      <div className="modal">
-        <div className="modal-container">
+      <div className="modal-post">
+        <div className="modal-container-post">
           <div className="modal-left">
             <h1 className="modal-title">Add Post</h1>
             <form onSubmit={handleSubmit}>

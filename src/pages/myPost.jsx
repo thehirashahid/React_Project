@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
-// import { useGlobalContext } from "../posts/context";
+import React, { useState, useContext } from "react";
+import { useNavigate, Link, Route, Routes } from "react-router-dom";
+
+import { PostContext } from "../useContext/PostContext";
+import { UserContext } from "../useContext/UserContext";
 import "../css/post.css";
 
 const MyPosts = () => {
-    // const { data } = useGlobalContext();
-    const getPosts = localStorage.getItem("post");
-    const myPosts = JSON.parse(getPosts)
+    let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const navigate = useNavigate();
+    const { posts, setPosts } = useContext(PostContext);
+    const { user } = useContext(UserContext);
+    var my_posts = userPosts.filter((curElement) => curElement.userEmail === user.email);
+
+
+    let [myPosts, setMyPosts] = useState(my_posts);
+
     function removePost(id) {
-        // myPosts.filter((curElement) => {
-        //     console.log(`curElement: ${curElement.id} and id: ${id}`)
-        //     curElement.id != id
-        // })
-        // console.log(myPosts)
-        for (var i = 0; i < myPosts.length; i++) {
-            if (myPosts[i].id === id) {
-                myPosts.splice(i, 1);
-            }
-        }
+        let updatedPosts = my_posts.filter((curElement) => curElement.id != id);
+        let updatedPostss = posts.filter((curElement) => curElement.id != id);
+        setMyPosts(updatedPosts)
+        setPosts(updatedPostss);
+        localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
-    useEffect(() => {
-        console.log(myPosts)
-    }, [myPosts]);
 
     return (<>
         <div className="posts-div">
-            {(myPosts === undefined || myPosts == null)
+            {(myPosts === undefined || myPosts.length === 0)
                 ? <h2>No Post Available</h2>
                 : myPosts.map((post) => {
                     const { title, body, userId, id } = post;
-                    console.log(post.title)
                     return (
                         <>
                             <div className="card" key={id}>
@@ -36,9 +36,13 @@ const MyPosts = () => {
                                 <p>{body}</p>
                                 <div className="card-button" >
                                     <p>
-                                        By <span> {userId} </span> | <span>{id}</span> comments
+                                        By <span> {userId} </span> | <span></span> comments
                                     </p>
-                                    <a href="#" onClick={() => removePost(id)}>Remove</a>
+                                    <Link className="edit" to={{
+                                        pathname: `/editPost/${id}`,
+                                        state: post
+                                    }} >Edit</Link>
+                                    <Link onClick={() => removePost(id)}  >Remove</Link>
                                 </div>
                             </div>
                         </>

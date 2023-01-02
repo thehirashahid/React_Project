@@ -1,7 +1,8 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 
+import { UserContext } from "../useContext/UserContext";
 import { signUpSchema } from "../schemas/registration";
 import "../css/registration.css"
 
@@ -15,26 +16,23 @@ const initialValues = {
 
 
 const Registration = () => {
-  const [inputData, setInputData] = useState('');
-  const [users, setUsers] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+  let usersData = JSON.parse(localStorage.getItem("users")) || [];
+  const navigate = useNavigate();
 
-  const addUser = () => {
-    if (inputData) {
-      setUsers([...users, inputData]);
-      setInputData('');
-    }
-  }
-
-
-
-  const history = useNavigate();
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
-        localStorage.setItem("user", JSON.stringify(values));
-        history("/posts")
+        const userExists = usersData.find(user => user.email === values.email);
+        if (userExists) alert('User Already exists');
+        else {
+          usersData.push(values);
+          localStorage.setItem("users", JSON.stringify(usersData));
+          setUser(values);
+          navigate("/allposts")
+        }
         action.resetForm();
       },
     });
@@ -130,7 +128,7 @@ const Registration = () => {
                 </div>
               </form>
               <p className="sign-up">
-                Already have an account? <a href="./login">Sign In now</a>
+                Already have an account? <Link to="./login">Sign In now</Link>
               </p>
             </div>
             <div className="modal-right">

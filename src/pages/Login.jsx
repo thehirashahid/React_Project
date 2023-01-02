@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { loginSchema } from "../schemas/loginSchema";
+import { UserContext } from "../useContext/UserContext";
 import "../css/registration.css"
 
 const initialValues = {
@@ -11,27 +12,23 @@ const initialValues = {
 };
 
 const Login = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
+  let usersData = JSON.parse(localStorage.getItem("users")) || [];
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values, action) => {
-        const getUserArr = localStorage.getItem("user");
-        const userData = JSON.parse(getUserArr)
-        const userLogin = userData.filter((el, k) => {
-          return el.email === values.email && el.password === values.password
-        });
-        if (userLogin.length === 0) alert("Invalid credentials");
-        else navigate("/posts")
+        const userExists = usersData.find(user => user.email === values.email && user.password === values.password);
+        if (userExists) {
+          setUser(userExists);
+          navigate("/allposts");
+        }
+        else alert("Invalid Credentials")
         action.resetForm();
       },
     });
-  console.log(
-    "🚀 ~ file: Login.jsx ~ line 25 ~ Login ~ errors",
-    errors
-  );
 
   return (
     <>
@@ -84,7 +81,7 @@ const Login = () => {
                 </div>
               </form>
               <p className="sign-up">
-                Don't have any account? <a href="./">Sign Up now</a>
+                Don't have any account? <Link to="./">Sign Up now</Link>
               </p>
             </div>
             <div className="modal-right">
