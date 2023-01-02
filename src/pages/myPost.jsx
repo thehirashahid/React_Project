@@ -7,15 +7,19 @@ import "../css/post.css";
 
 const MyPosts = () => {
     let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    const navigate = useNavigate();
+    const { posts, setPosts } = useContext(PostContext);
     const { user } = useContext(UserContext);
     var my_posts = userPosts.filter((curElement) => curElement.userEmail === user.email);
-    const navigate = useNavigate();
+
 
     let [myPosts, setMyPosts] = useState(my_posts);
 
     function removePost(id) {
-        let updatedPosts = userPosts.filter((curElement) => curElement.id != id);
+        let updatedPosts = my_posts.filter((curElement) => curElement.id != id);
+        let updatedPostss = posts.filter((curElement) => curElement.id != id);
         setMyPosts(updatedPosts)
+        setPosts(updatedPostss);
         localStorage.setItem("posts", JSON.stringify(updatedPosts));
     }
 

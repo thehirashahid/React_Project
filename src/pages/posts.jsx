@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 
-// import { PostContext } from "../useContext/PostContext";
+import { PostContext } from "../useContext/PostContext";
 import { useGlobalContext } from "../useContext/context";
 import { UserContext } from "../useContext/UserContext";
 
 import "../css/post.css";
 
 const Posts = () => {
-    // const { post, setPost } = useContext(PostContext);
+    const { posts } = useContext(PostContext);
     const { data, isLoading, removePost } = useGlobalContext();
     const { user } = useContext(UserContext);
+    console.log(`posts: ${posts}`)
     if (isLoading) {
         return (
             <>
@@ -20,7 +21,7 @@ const Posts = () => {
     return (<>
         <div className="posts-div">
             <h1>All Posts</h1>
-            {data.map((post) => {
+            {posts.map((post) => {
                 const { title, body, userId, id } = post;
                 return (
                     <>

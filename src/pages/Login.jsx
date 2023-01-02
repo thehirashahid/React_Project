@@ -12,7 +12,7 @@ const initialValues = {
 };
 
 const Login = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   let usersData = JSON.parse(localStorage.getItem("users")) || [];
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =

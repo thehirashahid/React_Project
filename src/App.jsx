@@ -13,10 +13,10 @@ import { AppProvider } from "./useContext/context";
 
 const App = () => {
   const [user, setUser] = useState('No User');
-  const [post, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   const providerUser = useMemo(() => ({ user, setUser }), [user, setUser]);
-  const providerPost = useMemo(() => ({ post, setPost }), [post, setPost]);
+  const providerPost = useMemo(() => ({ posts, setPosts }), [posts, setPosts]);
 
   return (
     <>
