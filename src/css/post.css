@@ -12,6 +12,11 @@ body {
     background-color: rgb(219, 230, 253);
 }
 
+.addComment {
+    font-size: 3rem;
+    color: black;
+}
+
 .header {
     display: flex;
     align-items: center;

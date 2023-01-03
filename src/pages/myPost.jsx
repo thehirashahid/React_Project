@@ -25,6 +25,7 @@ const MyPosts = () => {
 
     return (<>
         <div className="posts-div">
+            <h1>My Posts</h1>
             {(myPosts === undefined || myPosts.length === 0)
                 ? <h2>No Post Available</h2>
                 : myPosts.map((post) => {
@@ -36,7 +37,10 @@ const MyPosts = () => {
                                 <p>{body}</p>
                                 <div className="card-button" >
                                     <p>
-                                        By <span> {userId} </span> | <span></span> comments
+                                        By <span> {userId} </span> | <span></span>   <Link to={{
+                                            pathname: `/Comments/${id}`,
+                                            state: post
+                                        }} >Comments</Link>
                                     </p>
                                     <Link className="edit" to={{
                                         pathname: `/editPost/${id}`,

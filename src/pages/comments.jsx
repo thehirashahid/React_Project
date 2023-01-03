@@ -29,25 +29,15 @@ const Comments = () => {
         }
     }
 
-    function editComment(commentId, userEmail) {
-        navigate(`login`)
-        // if (userEmail === user.email) {
-        //     console.log("I'm in if condition");
-        //     alert('this was called hello');
-        // }
-        // else {
-        //     alert("You are not authorized to update this comment");
-        // }
-    }
-
     return (<>
         <div className="posts-div">
+            <Link className="addComment" to={{
+                pathname: `/addComment/${id}`,
+            }} >Add Comment</Link>
+
             {(commentsArray === undefined || commentsArray.length === 0)
                 ? <>
                     <h2>No Comment Available</h2>
-                    <Link className="edit" to={{
-                        pathname: `/addComment/${id}`,
-                    }} >Add Comment</Link>
                 </>
                 : commentsArray.map((singleComment) => {
                     const { comment, userId, commentId, userEmail } = singleComment;
@@ -65,9 +55,6 @@ const Comments = () => {
                                     <Link onClick={() => removeComment(commentId, userEmail)}>Delete</Link>
                                 </div>
                             </div>
-                            <Link className="edit" to={{
-                                pathname: `/addComment/${id}`,
-                            }} >Add Comment</Link>
                         </>
                     );
                 }

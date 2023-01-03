@@ -13,7 +13,7 @@ body {
     justify-content: space-between;
     align-items: stretch;
     gap: 2rem;
-    padding: 1.5rem 12rem;
+    padding: 1.5rem 10rem;
     font-size: 18px;
 }
 
@@ -26,7 +26,7 @@ body {
     margin: 0;
     list-style: none;
     display: flex;
-    gap: 12rem;
+    gap: 9rem;
 }
 
 .nav a {
