@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useMemo } from "react";
 import { useParams } from 'react-router-dom';
 import { useFormik } from "formik";
 import { v4 as uuidv4 } from 'uuid';
@@ -53,7 +53,7 @@ const EditPost = () => {
         }
     }
 
-    useEffect(() => {
+    useMemo(() => {
         findIndex();
     }, []);
 

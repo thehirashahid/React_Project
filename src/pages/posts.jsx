@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import { PostContext } from "../useContext/PostContext";
 import { useGlobalContext } from "../useContext/context";
@@ -27,7 +28,11 @@ const Posts = () => {
                             <p>{body}</p>
                             <div className="card-button" >
                                 <p>
-                                    By <span> {userId} </span> | <span></span> comments
+                                    By <span> {userId} </span> | <span></span>
+                                    <Link to={{
+                                        pathname: `/Comments/${id}`,
+                                        state: post
+                                    }} >Comments</Link>
                                 </p>
                             </div>
                         </div>

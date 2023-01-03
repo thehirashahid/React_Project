@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, Link, Route, Routes } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { PostContext } from "../useContext/PostContext";
 import { UserContext } from "../useContext/UserContext";
@@ -42,7 +42,7 @@ const MyPosts = () => {
                                         pathname: `/editPost/${id}`,
                                         state: post
                                     }} >Edit</Link>
-                                    <Link onClick={() => removePost(id)}  >Remove</Link>
+                                    <Link onClick={() => removePost(id)}  >Delete</Link>
                                 </div>
                             </div>
                         </>

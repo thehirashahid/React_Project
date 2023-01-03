@@ -15,7 +15,6 @@ var initialValues = {
   id: "",
 };
 
-console.log(initialValues.id);
 
 const AddPost = () => {
 
@@ -29,7 +28,8 @@ const AddPost = () => {
       initialValues,
       handleSubmit: (event) => event.preventDefault(),
       onSubmit: (values, action,) => {
-        if (values.title != '' && values.body != '') {
+        if (user === "No User") alert('You are not authorized to post')
+        else if (values.title != '' && values.body != '' && user != "No User") {
           values.userId = user.name;
           values.userEmail = user.email;
           values.id = uuidv4();

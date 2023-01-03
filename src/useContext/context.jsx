@@ -1,6 +1,7 @@
 import React, { useContext, useReducer, useEffect } from "react";
 
 import { PostContext } from "../useContext/PostContext";
+import { CommentsContext } from "../useContext/CommentsContext";
 import reducer from "./reducer";
 
 let API = 'https://jsonplaceholder.typicode.com/posts';
@@ -15,12 +16,15 @@ const AppContext = React.createContext();
 // provider function
 const AppProvider = ({ children }) => {
     const { setPosts } = useContext(PostContext);
+    const { setComments } = useContext(CommentsContext);
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
 
     const fetchApiData = async (url) => {
         let allPosts = JSON.parse(localStorage.getItem("posts")) || [];
+        let allComments = JSON.parse(localStorage.getItem("comments")) || [];
+        setComments(allComments);
         dispatch({ type: "SET_LOADING" });
         try {
             const res = await fetch(url);
