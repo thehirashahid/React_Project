@@ -42,7 +42,7 @@ const MyPosts = () => {
                                         pathname: `/editPost/${id}`,
                                         state: post
                                     }} >Edit</Link>
-                                    <Link onClick={() => removePost(id)}  >Delete</Link>
+                                    <Link onClick={() => removePost(id)}  >Remove</Link>
                                 </div>
                             </div>
                         </>

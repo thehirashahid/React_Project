@@ -8,8 +8,8 @@ import EditPost from './pages/editPost';
 import MyPosts from "./pages/myPost";
 import Comments from './pages/comments';
 import AddComment from './pages/addComment';
+import EditComment from './pages/editComment';
 import Header from "./header";
-
 import { UserContext } from "./useContext/UserContext";
 import { PostContext } from "./useContext/PostContext";
 import { CommentsContext } from "./useContext/CommentsContext";
@@ -39,9 +39,10 @@ const App = () => {
                     <Route path="/allposts" element={<Posts />} />
                     <Route path="/addPost" element={<AddPost />} />
                     <Route path="/editPost/:id" element={<EditPost />} />
-                    <Route path="/myPosts/" element={<MyPosts />} />
+                    <Route path="/myPosts" element={<MyPosts />} />
                     <Route path="/Comments/:id" element={<Comments />} />
                     <Route path="/AddComment/:id" element={<AddComment />} />
+                    <Route path="/editComment/:id" element={<EditComment />} />
                   </Routes>
                 </Router>
               </AppProvider>

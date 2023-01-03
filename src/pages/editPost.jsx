@@ -1,74 +1,50 @@
 import React, { useContext, useMemo } from "react";
 import { useParams } from 'react-router-dom';
 import { useFormik } from "formik";
-import { v4 as uuidv4 } from 'uuid';
 
 import { UserContext } from "../useContext/UserContext";
 import { PostContext } from "../useContext/PostContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import '../css/addPost.css'
 
-var initialValues = {
-    title: "",
-    body: "",
-    userId: "",
-    userEmail: "",
-    id: uuidv4(),
-};
-
-
 const EditPost = () => {
     const params = useParams();
     const { id } = params;
-    let all_Post_index;
-    let posts_index;
+
+    const { user } = useContext(UserContext);
 
     const { posts, setPosts } = useContext(PostContext);
-    let allPosts = JSON.parse(localStorage.getItem(["posts"])) || [];
     var targetPostArray = posts.filter((curElement) => curElement.id === id);
     var targetPost = targetPostArray[0];
 
+    var initialValues = {
+        title: targetPost.title,
+        body: targetPost.body,
+        userId: targetPost.userId,
+        userEmail: targetPost.userEmail,
+        id: targetPost.id,
+    };
+
+
     const navigate = useNavigate()
 
-    function findIndex() {
-        initialValues = {
-            title: targetPost.title,
-            body: targetPost.body,
-            id: targetPost.id,
-            userEmail: targetPost.userEmail,
-            userId: targetPost.userId
-        };
-        for (let i = 0; i < allPosts.length; i++) {
-            console.log(`targetPost.id: ${targetPost.id} and allPosts[i].id ${allPosts[i].id}`)
-            if (targetPost.id === allPosts[i].id) {
-                all_Post_index = i;
-                console.log('index ' + all_Post_index)
-            }
-        }
-        for (let i = 0; i < posts.length; i++) {
-            if (targetPost.id === posts[i].id) {
-                posts_index = i;
-                console.log(posts_index)
-            }
-        }
-    }
-
-    useMemo(() => {
-        findIndex();
-    }, []);
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({
             initialValues,
             handleSubmit: (event) => event.preventDefault(),
             onSubmit: (values, action,) => {
+                if (values.userEmail != user.email) alert('You are not authorized to update this commit');
                 if (values.title != '' && values.body != '') {
-                    console.log(`allPosts[all_Post_index]: ${all_Post_index} and  posts[posts_index]: ${posts_index}`)
-                    // allPosts[all_Post_index] = values;
-                    // posts[posts_index] = values;
-                    // setPosts(posts);
-                    // localStorage.setItem("posts", JSON.stringify(allPosts));
-                    // navigate('/myposts');
+                    var updatedPosts = posts.map((curElement) => {
+                        if (curElement.id === values.id) {
+                            return values;
+                        }
+                        return curElement
+                    });
+                    setPosts(updatedPosts);
+                    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+                    navigate('/myPosts');
                 }
                 else alert('Add title and description')
             },

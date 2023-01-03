@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { CommentsContext } from "../useContext/CommentsContext";
 import { UserContext } from "../useContext/UserContext";
 import "../css/post.css";
 
 const Comments = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const { id } = params || '';
     const { user } = useContext(UserContext);
@@ -17,16 +18,26 @@ const Comments = () => {
 
     function removeComment(commentId, userEmail) {
         if (userEmail === user.email) {
-            console.log(`userEmail: ${userEmail} and user.email: ${user.email}`)
-            // let updatedCommentArray = targetCommentArray.filter((curElement) => curElement.commentId != commentId);
-            // let updatedCommentsArray = comments.filter((curElement) => curElement.commentId != commentId);
-            // setCommentsArray(updatedCommentArray);
-            // setComments(updatedCommentsArray);
-            // localStorage.setItem("comments", JSON.stringify(updatedCommentsArray));
+            let updatedCommentArray = targetCommentArray.filter((curElement) => curElement.commentId != commentId);
+            let updatedCommentsArray = comments.filter((curElement) => curElement.commentId != commentId);
+            setCommentsArray(updatedCommentArray);
+            setComments(updatedCommentsArray);
+            localStorage.setItem("comments", JSON.stringify(updatedCommentsArray));
         }
         else {
             alert("You are not authorized to delete this comment");
         }
+    }
+
+    function editComment(commentId, userEmail) {
+        navigate(`login`)
+        // if (userEmail === user.email) {
+        //     console.log("I'm in if condition");
+        //     alert('this was called hello');
+        // }
+        // else {
+        //     alert("You are not authorized to update this comment");
+        // }
     }
 
     return (<>
@@ -48,10 +59,9 @@ const Comments = () => {
                                     <p>
                                         By <span> {userId} </span>
                                     </p>
-                                    {/* <Link className="edit" to={{
-                                        pathname: `/editPost/${id}`,
-                                        state: singleComment
-                                    }} >Edit</Link> */}
+                                    <Link className="edit" to={{
+                                        pathname: `/editComment/${commentId}`,
+                                    }} >Edit</Link>
                                     <Link onClick={() => removeComment(commentId, userEmail)}>Delete</Link>
                                 </div>
                             </div>
