@@ -22,6 +22,7 @@ const AddPost = () => {
   let allPosts = JSON.parse(localStorage.getItem(["posts"])) || [];
   const navigate = useNavigate();
 
+
   const { user } = useContext(UserContext);
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
