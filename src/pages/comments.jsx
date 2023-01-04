@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { CommentsContext } from "../useContext/CommentsContext";
 import { UserContext } from "../useContext/UserContext";
+import { Card } from "../components/card";
 import "../css/post.css";
 
 const Comments = () => {
@@ -54,40 +55,21 @@ const Comments = () => {
         }
     }
 
-    return (<>
-        <div className="posts-div">
-            <Link className="addComment" to={{
-                pathname: `/addComment/${id}`,
-            }} >Add Comment</Link>
+    return (
+        <>
+            <div className="posts-div">
+                <Link className="addComment" to={`/addComment/${id}`} >Add Comment</Link>
 
-            {(commentsArray === undefined || commentsArray.length === 0)
-                ? <>
-                    <h2>No Comment Available</h2>
-                </>
-                : commentsArray.map((singleComment) => {
-                    const { name, body, id, email, postId } = singleComment;
-                    return (
-                        <>
-                            <div className="card" key={id}>
-                                <h2>{name}</h2>
-                                <p>{body}</p>
-                                <div className="card-button" >
-                                    <p>
-                                        By <span> {email} </span>
-                                    </p>
-                                    <Link className="edit" to={{
-                                        pathname: `/editComment/${id}`,
-                                    }} >Edit</Link>
-                                    <Link onClick={() => removeComment(id, email)}>Delete</Link>
-                                </div>
-                            </div>
-                        </>
-                    );
-                }
-
-                )}
-        </div>
-    </>
+                {(commentsArray === undefined || commentsArray.length === 0)
+                    ? <>
+                        <h2>No Comment Available</h2>
+                    </>
+                    : commentsArray.map((singleComment) => {
+                        const { name, body, id, email } = singleComment;
+                        return <Card editBtn={false} title={name} body={body} userId={email} id={id} path={`/editComment/${id}`} button={'Edit'} />
+                    })}
+            </div>
+        </>
     );
 };
 

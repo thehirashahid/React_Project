@@ -36,10 +36,6 @@ const Registration = () => {
         action.resetForm();
       },
     });
-  console.log(
-    "🚀 ~ file: Registration.jsx ~ line 25 ~ Registration ~ errors",
-    errors
-  );
 
   return (
     <>

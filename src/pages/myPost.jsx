@@ -1,17 +1,16 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { PostContext } from "../useContext/PostContext";
 import { UserContext } from "../useContext/UserContext";
+import { Card } from "../components/card";
 import "../css/post.css";
 
 const MyPosts = () => {
     let userPosts = JSON.parse(localStorage.getItem("posts")) || [];
-    const navigate = useNavigate();
     const { posts, setPosts } = useContext(PostContext);
     const { user } = useContext(UserContext);
     var my_posts = userPosts.filter((curElement) => curElement.userEmail === user.email);
-
 
     let [myPosts, setMyPosts] = useState(my_posts);
 
@@ -31,26 +30,33 @@ const MyPosts = () => {
                 : myPosts.map((post) => {
                     const { title, body, userId, id } = post;
                     return (
+                        <Card
+                            title={title}
+                            body={body}
+                            userId={userId}
+                            editButton={true}
+                            editButtonLink={`/editPost/${id}`}
+                            id={id}
+                            path={`/Comments/${id}`}
+                            button={'Comments'}
+                            removeBtn={true}
+                            removeBtnLink={() => removePost(id)}
+                        />
+                    );
+                    {/* return (
                         <>
                             <div className="card" key={id}>
                                 <h2>{title}</h2>
                                 <p>{body}</p>
                                 <div className="card-button" >
-                                    <p>
-                                        By <span> {userId} </span> | <span></span>   <Link to={{
-                                            pathname: `/Comments/${id}`,
-                                            state: post
-                                        }} >Comments</Link>
+                                    <p>By <span> {userId} </span> | <Link to={`/Comments/${id}`} >Comments</Link>
                                     </p>
-                                    <Link className="edit" to={{
-                                        pathname: `/editPost/${id}`,
-                                        state: post
-                                    }} >Edit</Link>
+                                    <Link className="edit" to={`/editPost/${id}`} >Edit</Link>
                                     <Link onClick={() => removePost(id)}  >Remove</Link>
                                 </div>
                             </div>
                         </>
-                    );
+                    ); */}
                 }
                 )}
         </div>

@@ -29,7 +29,7 @@ const AddComment = () => {
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({
             initialValues,
-            onSubmit: (values, action,) => {
+            onSubmit: (values) => {
                 if (user === "No User") alert('You are not authorized to post')
                 else if (values.name != '' && values.body != '' && user != "No User") {
                     values.email = user.email;

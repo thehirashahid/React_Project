@@ -11,6 +11,7 @@ const EditPost = () => {
     const params = useParams();
     const { id } = params;
     const { user } = useContext(UserContext);
+    const navigate = useNavigate()
 
     const { posts, setPosts } = useContext(PostContext);
     var targetPostArray = posts.filter((curElement) => curElement.id === id);
@@ -24,15 +25,11 @@ const EditPost = () => {
         id: targetPost.id,
     };
 
-
-    const navigate = useNavigate()
-
-
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({
             initialValues,
             handleSubmit: (event) => event.preventDefault(),
-            onSubmit: (values, action,) => {
+            onSubmit: (values) => {
                 if (values.userEmail != user.email) alert('You are not authorized to update this commit');
                 if (values.title != '' && values.body != '') {
                     var updatedPosts = posts.map((curElement) => {
@@ -102,7 +99,6 @@ const EditPost = () => {
                     </div>
                 </div>
             </div>
-
         </>
     );
 };
