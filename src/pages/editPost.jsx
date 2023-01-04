@@ -10,7 +10,6 @@ import '../css/addPost.css'
 const EditPost = () => {
     const params = useParams();
     const { id } = params;
-
     const { user } = useContext(UserContext);
 
     const { posts, setPosts } = useContext(PostContext);

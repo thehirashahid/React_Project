@@ -7,14 +7,13 @@ import { CommentsContext } from "../useContext/CommentsContext";
 import { UserContext } from "../useContext/UserContext";
 
 import "../css/post.css";
-import Comments from "./comments";
 
 var initialValues = {
-    comment: "",
+    body: "",
     postId: "",
-    userEmail: "",
-    userId: "",
-    commentId: "",
+    email: "",
+    id: "",
+    name: ""
 };
 
 
@@ -32,10 +31,9 @@ const AddComment = () => {
             initialValues,
             onSubmit: (values, action,) => {
                 if (user === "No User") alert('You are not authorized to post')
-                else if (values.comment != '' && user != "No User") {
-                    values.userId = user.name;
-                    values.userEmail = user.email;
-                    values.commentId = uuidv4();
+                else if (values.name != '' && values.body != '' && user != "No User") {
+                    values.email = user.email;
+                    values.id = uuidv4();
                     values.postId = id;
                     comments.unshift(values);
                     setComments(comments)
@@ -54,21 +52,39 @@ const AddComment = () => {
                         <h1 className="modal-title">Add New Comment</h1>
                         <form onSubmit={handleSubmit}>
                             <div className="input-block">
+                                <label htmlFor="name" className="input-label">
+                                    Name
+                                </label>
+                                <input
+                                    type="name"
+                                    autoComplete="off"
+                                    name="name"
+                                    id="name"
+                                    placeholder="name"
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.name && touched.name ? (
+                                    <p className="form-error">{errors.name}</p>
+                                ) : null}
+                            </div>
+                            <div className="input-block">
                                 <label htmlFor="title" className="input-label">
                                     Comment
                                 </label>
                                 <input
-                                    type="comment"
+                                    type="body"
                                     autoComplete="off"
-                                    name="comment"
-                                    id="comment"
-                                    placeholder="Comment"
-                                    value={values.comment}
+                                    name="body"
+                                    id="body"
+                                    placeholder="body"
+                                    value={values.body}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
-                                {errors.comment && touched.comment ? (
-                                    <p className="form-error">{errors.comment}</p>
+                                {errors.body && touched.body ? (
+                                    <p className="form-error">{errors.body}</p>
                                 ) : null}
                             </div>
                             <div className="modal-buttons">

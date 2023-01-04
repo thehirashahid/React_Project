@@ -1,25 +1,50 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import { CommentsContext } from "../useContext/CommentsContext";
 import { UserContext } from "../useContext/UserContext";
 import "../css/post.css";
 
 const Comments = () => {
-    const navigate = useNavigate();
     const params = useParams();
     const { id } = params || '';
+    const postId = id;
+
+    let COMMENTAPI = `https://jsonplaceholder.typicode.com/posts/${id}/comments`;
+
     const { user } = useContext(UserContext);
 
     const { comments, setComments } = useContext(CommentsContext);
 
-    var targetCommentArray = comments.filter((curElement) => curElement.postId === id);
+    var targetCommentArray = comments.filter((curElement) => curElement.postId === postId) || "";
     const [commentsArray, setCommentsArray] = useState(targetCommentArray);
+
+
+    const fetchCommentData = async (url) => {
+        try {
+            const res = await fetch(url);
+            const apiComments = await res.json();
+            if (apiComments.length != 0) {
+                apiComments.map((comment) => {
+                    commentsArray.unshift(comment);
+                })
+                console.log(commentsArray);
+                setCommentsArray(commentsArray);
+                setComments(commentsArray)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        fetchCommentData(COMMENTAPI);
+    }, [])
+
 
     function removeComment(commentId, userEmail) {
         if (userEmail === user.email) {
-            let updatedCommentArray = targetCommentArray.filter((curElement) => curElement.commentId != commentId);
-            let updatedCommentsArray = comments.filter((curElement) => curElement.commentId != commentId);
+            let updatedCommentArray = commentsArray.filter((curElement) => curElement.id != commentId);
+            let updatedCommentsArray = comments.filter((curElement) => curElement.id != commentId);
             setCommentsArray(updatedCommentArray);
             setComments(updatedCommentsArray);
             localStorage.setItem("comments", JSON.stringify(updatedCommentsArray));
@@ -40,19 +65,20 @@ const Comments = () => {
                     <h2>No Comment Available</h2>
                 </>
                 : commentsArray.map((singleComment) => {
-                    const { comment, userId, commentId, userEmail } = singleComment;
+                    const { name, body, id, email, postId } = singleComment;
                     return (
                         <>
-                            <div className="card" key={commentId}>
-                                <h2>{comment}</h2>
+                            <div className="card" key={id}>
+                                <h2>{name}</h2>
+                                <p>{body}</p>
                                 <div className="card-button" >
                                     <p>
-                                        By <span> {userId} </span>
+                                        By <span> {email} </span>
                                     </p>
                                     <Link className="edit" to={{
-                                        pathname: `/editComment/${commentId}`,
+                                        pathname: `/editComment/${id}`,
                                     }} >Edit</Link>
-                                    <Link onClick={() => removeComment(commentId, userEmail)}>Delete</Link>
+                                    <Link onClick={() => removeComment(id, email)}>Delete</Link>
                                 </div>
                             </div>
                         </>

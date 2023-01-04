@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 
 import { CommentsContext } from "../useContext/CommentsContext";
@@ -14,28 +14,32 @@ const EditComment = () => {
     const navigate = useNavigate();
 
     const { comments, setComments } = useContext(CommentsContext);
-    var targetCommentArray = comments.filter((curElement) => curElement.commentId === commentId);
-    console.log(`targetCommentArray:  ${JSON.stringify(targetCommentArray[0])}`)
+    console.log(`comments:  ${comments}`)
+    var targetCommentArray = comments.filter((curElement) => curElement.id == commentId) || "";
     var targetComment = targetCommentArray[0];
 
-
     var initialValues = {
-        comment: targetComment.comment,
+        body: targetComment.body,
+        name: targetComment.name,
         postId: targetComment.postId,
-        userEmail: targetComment.userEmail,
-        userId: targetComment.userId,
-        commentId: targetComment.commentId,
+        email: targetComment.email,
+        id: targetComment.id,
     };
+    console.log(`initialValues: ${initialValues}`)
+
 
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
         useFormik({
             initialValues,
             handleSubmit: (event) => event.preventDefault(),
             onSubmit: (values, action,) => {
-                if (values.userEmail != user.email) alert('You are not authorized to update this commit');
-                else if (values.comment != '' && values.userEmail === user.email) {
+                if (values.email != user.email) {
+                    alert('You are not authorized to update this commit');
+                    navigate(-1);
+                }
+                else if (values.name != '' && values.body != '' && values.email === user.email) {
                     var updatedComments = comments.map((curElement) => {
-                        if (curElement.commentId === values.commentId) {
+                        if (curElement.id === values.id) {
                             return values;
                         }
                         return curElement
@@ -58,20 +62,38 @@ const EditComment = () => {
                         <form onSubmit={handleSubmit}>
                             <div className="input-block">
                                 <label htmlFor="title" className="input-label">
-                                    Comment
+                                    Name
                                 </label>
                                 <input
-                                    type="comment"
+                                    type="name"
                                     autoComplete="off"
-                                    name="comment"
-                                    id="comment"
-                                    placeholder="Comment"
-                                    value={values.comment}
+                                    name="name"
+                                    id="name"
+                                    placeholder="name"
+                                    value={values.name}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
-                                {errors.comment && touched.comment ? (
-                                    <p className="form-error">{errors.comment}</p>
+                                {errors.name && touched.name ? (
+                                    <p className="form-error">{errors.name}</p>
+                                ) : null}
+                            </div>
+                            <div className="input-block">
+                                <label htmlFor="title" className="input-label">
+                                    Comment
+                                </label>
+                                <input
+                                    type="body"
+                                    autoComplete="off"
+                                    name="body"
+                                    id="body"
+                                    placeholder="body"
+                                    value={values.body}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                {errors.body && touched.body ? (
+                                    <p className="form-error">{errors.body}</p>
                                 ) : null}
                             </div>
                             <div className="modal-buttons">

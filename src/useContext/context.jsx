@@ -16,7 +16,7 @@ const AppContext = React.createContext();
 // provider function
 const AppProvider = ({ children }) => {
     const { setPosts } = useContext(PostContext);
-    const { setComments } = useContext(CommentsContext);
+    const { comments, setComments } = useContext(CommentsContext);
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -49,6 +49,7 @@ const AppProvider = ({ children }) => {
 
     useEffect(() => {
         fetchApiData(API);
+
     }, []);
 
     return (
